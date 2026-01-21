@@ -10,33 +10,33 @@ import nursingHomeIcon from "@/assets/icons/nursing-home-icon.png";
 const services = [
   {
     icon: stretcherIcon,
-    title: "Stretcher / BLS Transport",
-    description: "Our Basic Life Support (BLS) stretcher transport is designed for patients who require medical monitoring and safe handling during transport.",
+    title: "Stretcher Transport (BLS)",
+    description: "Safe transport for patients requiring stretcher assistance between home, hospitals and medical facilities.",
   },
   {
     icon: wheelchairIcon,
     title: "Wheelchair Transport",
-    description: "We provide safe and dependable wheelchair transportation for patients who need assistance with mobility while traveling to and from medical appointments.",
+    description: "Door-to-door wheelchair transportation for appointments, procedures, and routine medical visits.",
   },
   {
     icon: dialysisIcon,
     title: "Dialysis Transportation",
-    description: "We provide reliable, scheduled dialysis transportation to ensure patients arrive on time for treatment and return home safely after each session.",
+    description: "Reliable recurring transport to and from dialysis centers across Harris County.",
   },
   {
     icon: hospitalDischargeIcon,
-    title: "Hospital Discharge Transportation",
-    description: "We provide safe and timely transportation for patients being discharged from hospitals to home or post-acute care facilities.",
+    title: "Hospital Discharge",
+    description: "Safe transport home or to other facility following hospital discharge.",
   },
   {
     icon: facilityTransferIcon,
     title: "Facility-to-Facility Transfers",
-    description: "We provide coordinated medical transportation between hospitals, nursing homes, rehabilitation centers, and other healthcare facilities.",
+    description: "Transportation between hospitals, rehab centers, nursing homes and specialty clinics.",
   },
   {
     icon: nursingHomeIcon,
     title: "Nursing Homes & Assisted Living",
-    description: "We provide dependable transportation services for nursing homes and assisted living communities for medical visits and facility transfers.",
+    description: "Scheduled and on demand transportation for long-term care residents.",
   },
 ];
 
