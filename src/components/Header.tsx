@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const Header = () => {
@@ -22,10 +21,10 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container-max">
-        <div className="flex items-center justify-between h-20 px-4 md:px-8">
+        <div className="flex items-center justify-between h-16 md:h-18 px-4 md:px-8">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <img src={logo} alt="Alert Medical Response" className="h-12 md:h-14 w-auto" />
+            <img src={logo} alt="Alert Medical Response" className="h-10 md:h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -41,11 +40,10 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
+          {/* CTA Button - No Phone Icon */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="tel:8327555533" className="cta-primary flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              <span>Call Now 832-755-5533</span>
+            <a href="tel:8327555533" className="cta-primary">
+              <span>832-755-5533</span>
             </a>
           </div>
 
@@ -73,9 +71,8 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <a href="tel:8327555533" className="cta-primary flex items-center justify-center gap-2 mt-4">
-                <Phone className="w-4 h-4" />
-                <span>Call Now 832-755-5533</span>
+              <a href="tel:8327555533" className="cta-primary flex items-center justify-center mt-4">
+                <span>832-755-5533</span>
               </a>
             </nav>
           </div>
