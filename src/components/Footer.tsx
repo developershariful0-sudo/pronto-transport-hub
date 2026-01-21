@@ -51,10 +51,9 @@ const Footer = () => {
             </p>
             <a
               href="tel:8327555533"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-2 text-sm"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 text-sm"
             >
-              <Phone className="w-4 h-4" />
-              <span>Need Transportation? Call Dispatch Now</span>
+              Need Transportation? Call Dispatch Now
             </a>
           </div>
         </div>

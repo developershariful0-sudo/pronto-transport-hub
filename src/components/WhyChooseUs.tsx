@@ -2,13 +2,11 @@ import { CheckCircle2 } from "lucide-react";
 import emtTeam from "@/assets/emt-team.jpg";
 
 const reasons = [
-  "Proudly Serving Houston & Harris County Since 2008",
-  "EMT-Led, Professionally Trained Medical Transport Team",
-  "Reliable, On-Time Pickups and Drop-Offs",
-  "Trusted by Local Hospitals and Care Facilities",
+  "EMT-Led Professional Team",
+  "Houston & Harris County Focused",
+  "Reliable Scheduling",
   "Clean, Fully Equipped Medical Vehicles",
-  "HIPAA-Conscious Patient Information Handling",
-  "Flexible Scheduling for Transportation Needs",
+  "Compassionate Patient Care",
 ];
 
 const WhyChooseUs = () => {
@@ -22,27 +20,20 @@ const WhyChooseUs = () => {
               Why Choose Alert Medical Response
             </h2>
 
-            {/* Two columns on desktop, one on mobile */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* Single column list matching reference */}
+            <div className="flex flex-col gap-3">
               {reasons.map((reason, index) => (
                 <div
                   key={reason}
-                  className="flex items-start gap-3 animate-slide-in"
+                  className="flex items-center gap-3 animate-slide-in"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-foreground font-medium leading-snug">
+                  <CheckCircle2 className="w-5 h-5 text-secondary flex-shrink-0" />
+                  <span className="text-base text-foreground leading-snug">
                     {reason}
                   </span>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 p-5 bg-muted rounded-xl">
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                At Alert Medical Response, we understand that medical transportation isn't just about getting from point A to point B. 
-                It's about providing safe, dignified care during a vulnerable time.
-              </p>
             </div>
           </div>
 
