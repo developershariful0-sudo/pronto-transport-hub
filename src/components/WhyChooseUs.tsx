@@ -1,12 +1,14 @@
-import { CheckCircle2 } from "lucide-react";
+import { Check } from "lucide-react";
 import emtTeam from "@/assets/emt-team.jpg";
 
 const reasons = [
-  "EMT-Led Professional Team",
-  "Houston & Harris County Focused",
-  "Reliable Scheduling",
+  "Proudly Serving Houston & Harris County Since 2008",
+  "EMT-Led, Professionally Trained Medical Transport Team",
+  "Reliable, On-Time Pickups and Drop-Offs",
+  "Trusted by Local Hospitals and Care Facilities",
   "Clean, Fully Equipped Medical Vehicles",
-  "Compassionate Patient Care",
+  "HIPAA-Conscious Patient Information Handling",
+  "Flexible Scheduling for Transportation Needs",
 ];
 
 const WhyChooseUs = () => {
@@ -20,16 +22,18 @@ const WhyChooseUs = () => {
               Why Choose Alert Medical Response
             </h2>
 
-            {/* Single column list matching reference */}
-            <div className="flex flex-col gap-3">
+            {/* Two columns on desktop, one on mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {reasons.map((reason, index) => (
                 <div
                   key={reason}
-                  className="flex items-center gap-3 animate-slide-in"
+                  className="flex items-start gap-3 animate-slide-in"
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-secondary flex-shrink-0" />
-                  <span className="text-base text-foreground leading-snug">
+                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-primary" />
+                  </div>
+                  <span className="text-sm md:text-base text-foreground leading-snug">
                     {reason}
                   </span>
                 </div>

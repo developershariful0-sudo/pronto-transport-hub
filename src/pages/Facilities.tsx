@@ -1,5 +1,5 @@
-import { Phone, ArrowRight, Building2, Hospital, Home, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Hospital, Home, Heart, Building2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -9,9 +9,9 @@ const Facilities = () => {
       <Header />
       <main className="flex-grow">
         {/* Hero */}
-        <section className="bg-secondary text-secondary-foreground py-16 px-4">
+        <section className="bg-secondary text-secondary-foreground py-12 px-4">
           <div className="container-max text-center">
-            <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4">
+            <h1 className="font-heading font-bold text-3xl md:text-4xl mb-4">
               For Healthcare Facilities
             </h1>
             <p className="text-secondary-foreground/80 text-lg max-w-2xl mx-auto">
@@ -23,7 +23,7 @@ const Facilities = () => {
         {/* Facility Types */}
         <section className="section-padding bg-muted">
           <div className="container-max">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
               <div className="bg-card rounded-xl shadow-lg p-6 border-l-4 border-primary">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -31,8 +31,8 @@ const Facilities = () => {
                   </div>
                   <h3 className="font-heading font-bold text-xl text-foreground">Hospitals</h3>
                 </div>
-                <p className="text-muted-foreground">
-                  Fast, reliable discharge transportation. We coordinate with case managers and discharge planners to ensure smooth patient transitions.
+                <p className="text-muted-foreground text-sm">
+                  Fast, reliable discharge transportation. We coordinate with case managers and discharge planners for smooth patient transitions.
                 </p>
               </div>
 
@@ -43,7 +43,7 @@ const Facilities = () => {
                   </div>
                   <h3 className="font-heading font-bold text-xl text-foreground">Nursing Homes</h3>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Scheduled and on-demand transportation for skilled nursing facilities and assisted living communities.
                 </p>
               </div>
@@ -55,8 +55,8 @@ const Facilities = () => {
                   </div>
                   <h3 className="font-heading font-bold text-xl text-foreground">Dialysis Centers</h3>
                 </div>
-                <p className="text-muted-foreground">
-                  Reliable recurring transport for dialysis patients. We understand the critical nature of on-time arrivals for treatment schedules.
+                <p className="text-muted-foreground text-sm">
+                  Reliable recurring transport for dialysis patients. We understand the critical nature of on-time arrivals.
                 </p>
               </div>
 
@@ -67,32 +67,33 @@ const Facilities = () => {
                   </div>
                   <h3 className="font-heading font-bold text-xl text-foreground">Rehab & Specialty</h3>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Inter-facility transfers between rehab centers, specialty clinics, and other healthcare providers.
                 </p>
               </div>
             </div>
 
-            {/* Request Transportation */}
-            <div className="bg-card rounded-2xl shadow-xl p-8 md:p-12 text-center">
-              <h2 className="font-heading font-bold text-3xl text-foreground mb-4">
+            {/* Request Transportation CTA */}
+            <div className="bg-card rounded-2xl shadow-xl p-8 md:p-10 text-center mb-10">
+              <h2 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-4">
                 Request Transportation
               </h2>
-              <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                For fast transportation requests, contact our dispatch team directly or use our partner portal. 
-                Our team is available 24/7 to handle your facility's transportation needs.
+              <p className="text-muted-foreground text-lg mb-6 max-w-2xl mx-auto">
+                For fast transportation requests, use our online form or contact our dispatch team directly. Available 24/7.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <a href="tel:8327555533" className="cta-primary flex items-center justify-center gap-2 text-lg">
-                  <Phone className="w-5 h-5" />
-                  <span>Call Dispatch: 832-755-5533</span>
+                <Link to="/request-transportation" className="cta-primary">
+                  Request Transportation
+                </Link>
+                <a href="tel:8327555533" className="cta-secondary">
+                  Call Dispatch: 832-755-5533
                 </a>
               </div>
 
-              <div className="bg-muted rounded-xl p-6 max-w-xl mx-auto">
+              <div className="bg-muted rounded-xl p-6 max-w-xl mx-auto text-left">
                 <h3 className="font-semibold text-foreground mb-3">What to Have Ready:</h3>
-                <ul className="text-muted-foreground text-left space-y-2">
+                <ul className="text-muted-foreground text-sm space-y-2">
                   <li>• Patient name and date of birth</li>
                   <li>• Pickup and destination addresses</li>
                   <li>• Requested pickup date and time</li>
@@ -102,29 +103,43 @@ const Facilities = () => {
                 </ul>
               </div>
             </div>
+
+            {/* Portal Note */}
+            <div className="bg-secondary/5 border border-secondary/20 rounded-xl p-6 text-center">
+              <p className="text-muted-foreground">
+                Facilities may request a personalized customer portal and QR request page to simplify scheduling. To request portal access, contact dispatch at{" "}
+                <a href="tel:8327555533" className="text-primary font-semibold">(832) 755-5533</a> or email{" "}
+                <a href="mailto:info@alertmedicalresponse.net" className="text-primary font-semibold">info@alertmedicalresponse.net</a>.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* Contact Section */}
         <section className="section-padding bg-background">
           <div className="container-max">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div>
-                <h2 className="font-heading font-bold text-3xl text-foreground mb-4">
+                <h2 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-4">
                   Partner with Alert Medical Response
                 </h2>
                 <p className="text-muted-foreground text-lg mb-6">
-                  We work closely with healthcare facilities across Harris County to provide reliable, professional medical transportation services. 
-                  Contact us to discuss partnership opportunities and dedicated account management.
+                  We work closely with healthcare facilities across Harris County to provide reliable, professional medical transportation. Contact us to discuss partnership opportunities.
                 </p>
-                <div className="space-y-4">
-                  <p className="flex items-center gap-3 text-foreground">
-                    <Phone className="w-5 h-5 text-primary" />
-                    <span>Dispatch: <a href="tel:8327555533" className="text-primary font-semibold">832-755-5533</a></span>
+                <div className="space-y-3 text-sm">
+                  <p className="text-foreground">
+                    <span className="font-semibold">Dispatch:</span>{" "}
+                    <a href="tel:8327555533" className="text-primary font-semibold">832-755-5533</a>
                   </p>
-                  <p className="flex items-center gap-3 text-foreground">
-                    <Building2 className="w-5 h-5 text-secondary" />
-                    <span>Billing: aramatbilling1@yahoo.com</span>
+                  <p className="text-foreground">
+                    <span className="font-semibold">Email:</span>{" "}
+                    <a href="mailto:info@alertmedicalresponse.net" className="text-secondary">info@alertmedicalresponse.net</a>
+                  </p>
+                  <p className="text-muted-foreground">
+                    <span className="font-semibold text-foreground">Address:</span> 6776 Southwest Fwy, Suite 350, Houston, TX 77072
+                  </p>
+                  <p className="text-muted-foreground">
+                    <span className="font-semibold text-foreground">Service Area:</span> Houston & Harris County (Katy, Sugar Land, Pasadena, Pearland, Cypress, Spring)
                   </p>
                 </div>
               </div>
@@ -136,9 +151,8 @@ const Facilities = () => {
                 <p className="text-muted-foreground mb-6">
                   For general inquiries, partnership discussions, or to set up a facility account, please contact us.
                 </p>
-                <Link to="/contact" className="cta-secondary w-full flex items-center justify-center gap-2">
+                <Link to="/contact" className="cta-secondary w-full flex items-center justify-center">
                   Contact Us
-                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
