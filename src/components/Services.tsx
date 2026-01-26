@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import stretcherIcon from "@/assets/icons/stretcher-icon.png";
 import wheelchairIcon from "@/assets/icons/wheelchair-icon.png";
@@ -10,33 +9,33 @@ import nursingHomeIcon from "@/assets/icons/nursing-home-icon.png";
 const services = [
   {
     icon: stretcherIcon,
-    title: "Stretcher Transport (BLS)",
-    description: "Safe transport for patients requiring stretcher assistance between home, hospitals and medical facilities.",
+    title: "Stretcher / BLS Transport",
+    description: "BLS stretcher transport for patients requiring medical monitoring and safe handling.",
   },
   {
     icon: wheelchairIcon,
     title: "Wheelchair Transport",
-    description: "Door-to-door wheelchair transportation for appointments, procedures, and routine medical visits.",
+    description: "Safe wheelchair transportation to and from medical appointments.",
   },
   {
     icon: dialysisIcon,
-    title: "Dialysis Transportation",
-    description: "Reliable recurring transport to and from dialysis centers across Harris County.",
+    title: "Dialysis Transport",
+    description: "Reliable, scheduled dialysis transportation for on-time treatment arrivals.",
   },
   {
     icon: hospitalDischargeIcon,
     title: "Hospital Discharge",
-    description: "Safe transport home or to other facility following hospital discharge.",
+    description: "Safe and timely transportation for patients being discharged from hospitals.",
   },
   {
     icon: facilityTransferIcon,
     title: "Facility-to-Facility Transfers",
-    description: "Transportation between hospitals, rehab centers, nursing homes and specialty clinics.",
+    description: "Coordinated medical transportation between healthcare facilities.",
   },
   {
     icon: nursingHomeIcon,
-    title: "Nursing Homes & Assisted Living",
-    description: "Scheduled and on demand transportation for long-term care residents.",
+    title: "Nursing Homes / Rehab",
+    description: "Dependable transportation for nursing homes, rehab, and assisted living.",
   },
 ];
 
@@ -67,18 +66,27 @@ const Services = () => {
               <h3 className="font-heading font-bold text-lg text-foreground mb-2">
                 {service.title}
               </h3>
-              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {service.description}
               </p>
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-1 text-primary font-medium text-sm hover:gap-2 transition-all"
-              >
-                Learn More
-                <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
           ))}
+        </div>
+
+        {/* CTA Row */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+          <Link
+            to="/new-patients"
+            className="cta-primary flex items-center justify-center"
+          >
+            Request Transportation
+          </Link>
+          <a
+            href="tel:8327555533"
+            className="cta-secondary flex items-center justify-center"
+          >
+            Call Dispatch
+          </a>
         </div>
       </div>
     </section>

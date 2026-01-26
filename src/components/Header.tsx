@@ -9,10 +9,10 @@ const Header = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
-    { name: "New Patients", path: "/new-patients" },
     { name: "Facilities", path: "/facilities" },
+    { name: "New Patients", path: "/new-patients" },
+    { name: "Careers", path: "/careers" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -40,11 +40,14 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button - No Phone Icon */}
+          {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="tel:8327555533" className="cta-primary">
-              <span>832-755-5533</span>
+            <a href="tel:8327555533" className="text-foreground font-semibold hover:text-primary transition-colors">
+              832-755-5533
             </a>
+            <Link to="/new-patients" className="cta-primary">
+              Request Transportation
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,9 +74,12 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <a href="tel:8327555533" className="cta-primary flex items-center justify-center mt-4">
-                <span>832-755-5533</span>
+              <a href="tel:8327555533" className="text-foreground font-semibold text-center py-2 mt-2">
+                Dispatch: 832-755-5533
               </a>
+              <Link to="/new-patients" className="cta-primary flex items-center justify-center mt-2" onClick={() => setIsMenuOpen(false)}>
+                Request Transportation
+              </Link>
             </nav>
           </div>
         )}

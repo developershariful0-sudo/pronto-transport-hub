@@ -22,39 +22,33 @@ const Hero = () => {
             Reliable Medical Transportation Services in Houston
           </h1>
           <p className="text-base md:text-lg text-secondary-foreground/90 mb-6 leading-relaxed">
-            Stretcher (BLS), wheelchair, dialysis and facility transfers throughout Harris County. 
-            Professional EMT Staff. Safe. On-time. Compassionate care.
+            Reliable non-emergency medical transportation for patients, families, and healthcare facilities throughout Houston and Harris County.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href="tel:8327555533"
-              className="cta-primary flex items-center justify-center gap-2"
-            >
-              <span>Call Now 832-755-5533</span>
-            </a>
             <Link
               to="/new-patients"
+              className="cta-primary flex items-center justify-center gap-2"
+            >
+              <span>Request Transportation</span>
+            </Link>
+            <a
+              href="tel:8327555533"
               className="cta-outline flex items-center justify-center gap-2"
             >
-              <span>Request Transport</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+              <span>Call Dispatch</span>
+            </a>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-4 text-sm text-secondary-foreground/80">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary" />
-              Serving Houston & Harris County
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary" />
-              Professional EMT Staff
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary" />
-              On-Time Transport
-            </span>
+          {/* Trust Line */}
+          <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm text-secondary-foreground/90">
+            <span>Serving Houston & Harris County</span>
+            <span className="hidden sm:inline">•</span>
+            <span>EMT-Staffed</span>
+            <span className="hidden sm:inline">•</span>
+            <span>On-Time Transport</span>
+            <span className="hidden sm:inline">•</span>
+            <span>In Service Since 2008</span>
           </div>
         </div>
       </div>
