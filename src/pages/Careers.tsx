@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle, Briefcase } from "lucide-react";
+import { CheckCircle, Cross, Stethoscope, HeartPulse, Ambulance } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -13,21 +13,25 @@ const positions = [
     id: "emtb",
     title: "EMT-B",
     description: "Basic Emergency Medical Technician",
+    icon: Cross,
   },
   {
     id: "aemt",
     title: "Advanced EMT (AEMT)",
     description: "Advanced Emergency Medical Technician",
+    icon: Stethoscope,
   },
   {
     id: "paramedic",
     title: "Paramedic",
     description: "Licensed Paramedic",
+    icon: HeartPulse,
   },
   {
     id: "driver",
     title: "Medical Transport Driver",
     description: "EMR licensed driver",
+    icon: Ambulance,
   },
 ];
 
@@ -118,7 +122,7 @@ const Careers = () => {
                   className="bg-card rounded-xl shadow-lg p-6 text-center border-t-4 border-primary"
                 >
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <Briefcase className="w-6 h-6 text-primary" />
+                    <position.icon className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="font-heading font-bold text-lg text-foreground mb-1">
                     {position.title}
