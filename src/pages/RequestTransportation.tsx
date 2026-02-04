@@ -313,15 +313,15 @@ const RequestTransportation = () => {
               {/* Date & Time */}
               <div className="bg-card rounded-2xl shadow-lg p-6 md:p-8">
                 <h2 className="font-heading font-bold text-xl text-foreground mb-6 pb-4 border-b border-border">
-                  Date & Time
+                  Date & Time of Transport
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="dateNeeded">Date Needed *</Label>
+                    <Label htmlFor="dateNeeded">Date of Transport *</Label>
                     <Input id="dateNeeded" name="dateNeeded" type="date" value={formData.dateNeeded} onChange={handleChange} required className="mt-1 bg-background" />
                   </div>
                   <div>
-                    <Label htmlFor="timeNeeded">Pickup Time *</Label>
+                    <Label htmlFor="timeNeeded">Time of Transport *</Label>
                     <Input id="timeNeeded" name="timeNeeded" type="time" value={formData.timeNeeded} onChange={handleChange} required className="mt-1 bg-background" />
                   </div>
                 </div>
