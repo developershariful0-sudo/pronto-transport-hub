@@ -54,11 +54,11 @@ const Contact = () => {
                 832-755-5533
               </a>
               <a href="mailto:info@alertmedicalresponse.net" className="flex items-center gap-2 text-primary font-semibold hover:underline">
-                <Mail className="w-5 h-5" />
+                <Mail className="w-5 h-5 text-primary" />
                 info@alertmedicalresponse.net
               </a>
-              <span className="flex items-center gap-2 text-muted-foreground">
-                <MapPin className="w-5 h-5" />
+              <span className="flex items-center gap-2 text-primary font-medium">
+                <MapPin className="w-5 h-5 text-primary" />
                 6776 Southwest Fwy, Suite 350, Houston, TX 77072
               </span>
             </div>
@@ -99,12 +99,12 @@ const Contact = () => {
                   </a>
 
                   <div className="flex items-start gap-4 p-4 bg-card rounded-xl shadow-md">
-                    <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-secondary" />
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground">Office Address</h3>
-                      <p className="text-muted-foreground">
+                      <p className="text-primary font-medium">
                         6776 Southwest Fwy, Suite 350<br />
                         Houston, TX 77072
                       </p>
@@ -112,14 +112,14 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-start gap-4 p-4 bg-card rounded-xl shadow-md">
-                    <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-6 h-6 text-secondary" />
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-6 h-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground">Hours of Operation</h3>
-                      <p className="text-muted-foreground">
+                      <p className="text-primary font-medium">
                         Dispatch: 24/7<br />
-                        Office: Mon-Fri 8am-5pm
+                        <span className="text-muted-foreground">Office: Mon-Fri 8am-5pm</span>
                       </p>
                     </div>
                   </div>

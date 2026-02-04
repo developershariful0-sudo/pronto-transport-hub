@@ -74,12 +74,14 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <a href="tel:8327555533" className="text-foreground font-semibold text-center py-2 mt-2">
-                Dispatch: 832-755-5533
-              </a>
-              <Link to="/new-patients" className="cta-primary flex items-center justify-center mt-2" onClick={() => setIsMenuOpen(false)}>
-                Request Transportation
-              </Link>
+              <div className="border-t border-border mt-4 pt-4 space-y-3">
+                <a href="tel:8327555533" className="cta-primary block text-center font-sans" onClick={() => setIsMenuOpen(false)}>
+                  Call 832-755-5533
+                </a>
+                <Link to="/new-patients" className="cta-secondary block text-center font-sans" onClick={() => setIsMenuOpen(false)}>
+                  Request Transportation
+                </Link>
+              </div>
             </nav>
           </div>
         )}

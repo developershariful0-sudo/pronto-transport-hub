@@ -44,6 +44,7 @@ const Careers = () => {
     lastName: "",
     email: "",
     phone: "",
+    dateOfBirth: "",
     certifications: "",
     experience: "",
     additionalInfo: "",
@@ -208,6 +209,19 @@ const Careers = () => {
                         className="mt-1"
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="dateOfBirth">Date of Birth *</Label>
+                    <Input
+                      id="dateOfBirth"
+                      name="dateOfBirth"
+                      type="date"
+                      value={formData.dateOfBirth}
+                      onChange={handleChange}
+                      required
+                      className="mt-1"
+                    />
                   </div>
 
                   <div>
