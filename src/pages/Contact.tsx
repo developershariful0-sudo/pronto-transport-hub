@@ -50,10 +50,10 @@ const Contact = () => {
           <div className="container-max">
             <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-center">
               <a href="tel:8327555533" className="flex items-center gap-2 text-primary font-bold text-lg hover:underline">
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5 text-primary" />
                 832-755-5533
               </a>
-              <a href="mailto:info@alertmedicalresponse.net" className="flex items-center gap-2 text-secondary font-semibold hover:underline">
+              <a href="mailto:info@alertmedicalresponse.net" className="flex items-center gap-2 text-primary font-semibold hover:underline">
                 <Mail className="w-5 h-5" />
                 info@alertmedicalresponse.net
               </a>
@@ -181,13 +181,14 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label htmlFor="phone">Phone Number *</Label>
                       <Input
                         id="phone"
                         name="phone"
                         type="tel"
                         value={formData.phone}
                         onChange={handleChange}
+                        required
                         className="mt-1 bg-background"
                       />
                     </div>
@@ -212,8 +213,8 @@ const Contact = () => {
                 </div>
 
                 {/* Privacy Notice */}
-                <div className="mt-6 bg-secondary/5 border border-secondary/20 rounded-xl p-4">
-                  <h3 className="font-semibold text-foreground text-sm mb-2">Your Privacy Is Important to Us</h3>
+                <div className="mt-6 bg-primary/5 border border-primary/20 rounded-xl p-4">
+                  <h3 className="font-semibold text-foreground text-sm mb-2 whitespace-nowrap">Your Privacy Is Important to Us</h3>
                   <p className="text-muted-foreground text-xs leading-relaxed">
                     Messages sent through this page are kept confidential and reviewed only by our authorized team. We follow HIPAA guidelines to protect your personal and medical information and use it only to assist with scheduling or answering your questions.
                   </p>
