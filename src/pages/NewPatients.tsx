@@ -1,45 +1,114 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Check, ChevronsUpDown, X } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
-const medicalConditionOptions = [
-  "Heart disease / Heart problems",
-  "High blood pressure",
-  "History of heart attack",
-  "Irregular heartbeat (arrhythmia)",
-  "Congestive heart failure (CHF)",
-  "Stroke (past or recent)",
-  "Seizure disorder",
-  "Dementia / Alzheimer's",
-  "Parkinson's disease",
-  "COPD",
-  "Asthma",
-  "Requires oxygen",
-  "Tracheostomy",
-  "Diabetes",
-  "Kidney disease",
-  "Dialysis patient",
-  "Difficulty walking",
-  "Wheelchair dependent",
-  "Bedbound",
-  "Recent fall or fracture",
-  "Amputation",
-  "Recent surgery",
-  "Recent hospitalization",
-  "Wound care",
-  "IV / PICC line / catheter",
-  "Feeding tube",
-  "Cancer",
-  "Bariatric patient",
-  "Pregnancy",
-  "Other (specify below)",
+const medicalConditionCategories = [
+  {
+    category: "Cardiac / Circulatory",
+    conditions: [
+      "Hypertension (High blood pressure)",
+      "Coronary artery disease",
+      "Congestive heart failure (CHF)",
+      "History of heart attack (MI)",
+      "Irregular heartbeat / Arrhythmia",
+      "Pacemaker / Implanted cardiac device",
+      "Peripheral vascular disease (PVD)",
+    ],
+  },
+  {
+    category: "Neurological",
+    conditions: [
+      "Stroke (CVA – past or recent)",
+      "Transient ischemic attack (TIA)",
+      "Seizure disorder / Epilepsy",
+      "Parkinson's disease",
+      "Multiple sclerosis (MS)",
+      "Dementia / Alzheimer's disease",
+      "Traumatic brain injury (TBI)",
+    ],
+  },
+  {
+    category: "Respiratory",
+    conditions: [
+      "Chronic obstructive pulmonary disease (COPD)",
+      "Asthma",
+      "Requires supplemental oxygen",
+      "Tracheostomy",
+      "Sleep apnea",
+      "Ventilator dependent",
+    ],
+  },
+  {
+    category: "Metabolic / Endocrine",
+    conditions: [
+      "Diabetes (Type I or II)",
+      "Hypoglycemia history",
+      "Thyroid disorder",
+    ],
+  },
+  {
+    category: "Renal",
+    conditions: [
+      "Chronic kidney disease",
+      "End-stage renal disease (ESRD)",
+      "Dialysis patient",
+    ],
+  },
+  {
+    category: "Mobility / Functional Limitations",
+    conditions: [
+      "Difficulty walking / Limited mobility",
+      "Wheelchair dependent",
+      "Stretcher / Bedbound",
+      "Recent fall",
+      "Recent fracture",
+      "Amputation",
+      "Requires assistance transferring",
+    ],
+  },
+  {
+    category: "Gastrointestinal / Nutritional",
+    conditions: [
+      "Feeding tube (G-tube / J-tube)",
+      "Swallowing difficulty (dysphagia)",
+    ],
+  },
+  {
+    category: "Oncology",
+    conditions: [
+      "Active cancer",
+      "Undergoing chemotherapy or radiation",
+    ],
+  },
+  {
+    category: "Infectious / Isolation",
+    conditions: [
+      "MRSA",
+      "C. difficile (C. diff)",
+      "COVID-19 (recent or active)",
+      "Requires isolation precautions",
+    ],
+  },
+  {
+    category: "Other Important Conditions",
+    conditions: [
+      "Bariatric patient",
+      "Pregnancy",
+      "Pressure ulcers / Wounds",
+      "Recent surgery",
+    ],
+  },
 ];
 
 const transportTypes = [
@@ -51,6 +120,7 @@ const transportTypes = [
 const NewPatients = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [medicalConditionsOpen, setMedicalConditionsOpen] = useState(false);
   const [formData, setFormData] = useState({
     patientFirstName: "",
     patientLastName: "",
@@ -58,7 +128,7 @@ const NewPatients = () => {
     patientPhone: "",
     patientEmail: "",
     transportType: "",
-    medicalCondition: "",
+    selectedConditions: [] as string[],
     otherConditions: "",
     insuranceProvider: "",
     insurancePolicyNumber: "",
@@ -71,6 +141,18 @@ const NewPatients = () => {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
+  };
+
+  const toggleCondition = (condition: string) => {
+    setFormData((prev) => {
+      const isSelected = prev.selectedConditions.includes(condition);
+      return {
+        ...prev,
+        selectedConditions: isSelected
+          ? prev.selectedConditions.filter((c) => c !== condition)
+          : [...prev.selectedConditions, condition],
+      };
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -274,28 +356,76 @@ const NewPatients = () => {
                     Medical Condition
                   </h3>
                   <div>
-                    <Label htmlFor="medicalCondition">Primary Medical Condition *</Label>
-                    <Select onValueChange={(value) => handleSelectChange("medicalCondition", value)} required>
-                      <SelectTrigger className="mt-1 bg-background">
-                        <SelectValue placeholder="Select primary condition" />
-                      </SelectTrigger>
-                      <SelectContent className="max-h-60">
-                        {medicalConditionOptions.map((condition) => (
-                          <SelectItem key={condition} value={condition}>
+                    <Label>Medical Conditions (Select all that apply)</Label>
+                    <Popover open={medicalConditionsOpen} onOpenChange={setMedicalConditionsOpen}>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className={cn(
+                            "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                            "mt-1"
+                          )}
+                        >
+                          <span className="text-muted-foreground">
+                            {formData.selectedConditions.length > 0
+                              ? `${formData.selectedConditions.length} condition(s) selected`
+                              : "Search and select conditions..."}
+                          </span>
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full min-w-[300px] p-0" align="start">
+                        <Command>
+                          <CommandInput placeholder="Search conditions..." />
+                          <CommandList className="max-h-60">
+                            <CommandEmpty>No condition found.</CommandEmpty>
+                            {medicalConditionCategories.map((cat) => (
+                              <CommandGroup key={cat.category} heading={cat.category}>
+                                {cat.conditions.map((condition) => (
+                                  <CommandItem
+                                    key={condition}
+                                    value={condition}
+                                    onSelect={() => toggleCondition(condition)}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        formData.selectedConditions.includes(condition)
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {condition}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            ))}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {formData.selectedConditions.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {formData.selectedConditions.map((condition) => (
+                          <Badge key={condition} variant="secondary" className="flex items-center gap-1">
                             {condition}
-                          </SelectItem>
+                            <X
+                              className="h-3 w-3 cursor-pointer hover:text-primary"
+                              onClick={() => toggleCondition(condition)}
+                            />
+                          </Badge>
                         ))}
-                      </SelectContent>
-                    </Select>
+                      </div>
+                    )}
                   </div>
                   <div>
-                    <Label htmlFor="otherConditions">Other Conditions / Special Needs</Label>
+                    <Label htmlFor="otherConditions">Other (Please specify)</Label>
                     <Textarea
                       id="otherConditions"
                       name="otherConditions"
                       value={formData.otherConditions}
                       onChange={handleChange}
-                      placeholder="List any additional conditions or special needs"
+                      placeholder="Enter any conditions not listed above"
                       className="mt-1 bg-background"
                       rows={3}
                     />
