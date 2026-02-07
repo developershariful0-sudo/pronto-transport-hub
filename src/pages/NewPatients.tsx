@@ -10,8 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const medicalConditionCategories = [
   {
@@ -111,6 +113,12 @@ const medicalConditionCategories = [
   },
 ];
 
+// Flatten all conditions for mobile dropdown
+const allConditions = [
+  "None / No Medical Conditions",
+  ...medicalConditionCategories.flatMap((cat) => cat.conditions),
+];
+
 const transportTypes = [
   "Stretcher / BLS Transport",
   "Wheelchair Transport",
@@ -119,12 +127,14 @@ const transportTypes = [
 
 const NewPatients = () => {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [medicalConditionsOpen, setMedicalConditionsOpen] = useState(false);
   const [formData, setFormData] = useState({
     patientFirstName: "",
     patientLastName: "",
     patientDOB: "",
+    patientGender: "",
     patientPhone: "",
     patientEmail: "",
     transportType: "",
@@ -145,12 +155,25 @@ const NewPatients = () => {
 
   const toggleCondition = (condition: string) => {
     setFormData((prev) => {
-      const isSelected = prev.selectedConditions.includes(condition);
+      // If selecting "None", clear all other selections
+      if (condition === "None / No Medical Conditions") {
+        if (prev.selectedConditions.includes(condition)) {
+          return { ...prev, selectedConditions: [] };
+        }
+        return { ...prev, selectedConditions: [condition] };
+      }
+      
+      // If selecting any other condition, remove "None" if it was selected
+      const filteredConditions = prev.selectedConditions.filter(
+        (c) => c !== "None / No Medical Conditions"
+      );
+      
+      const isSelected = filteredConditions.includes(condition);
       return {
         ...prev,
         selectedConditions: isSelected
-          ? prev.selectedConditions.filter((c) => c !== condition)
-          : [...prev.selectedConditions, condition],
+          ? filteredConditions.filter((c) => c !== condition)
+          : [...filteredConditions, condition],
       };
     });
   };
@@ -240,7 +263,8 @@ const NewPatients = () => {
                     to="/request-transportation"
                     className="cta-secondary inline-flex items-center justify-center"
                   >
-                    Request Transportation
+                    <span className="hidden md:inline">Request Transportation</span>
+                    <span className="md:hidden">Request Transport</span>
                   </Link>
                   <a
                     href="tel:8327555533"
@@ -302,6 +326,21 @@ const NewPatients = () => {
                       />
                     </div>
                     <div>
+                      <Label htmlFor="patientGender">Gender *</Label>
+                      <Select onValueChange={(value) => handleSelectChange("patientGender", value)} required>
+                        <SelectTrigger className="mt-1 bg-background">
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Male</SelectItem>
+                          <SelectItem value="female">Female</SelectItem>
+                          <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
                       <Label htmlFor="patientPhone">Phone Number *</Label>
                       <Input
                         id="patientPhone"
@@ -313,18 +352,18 @@ const NewPatients = () => {
                         className="mt-1 bg-background"
                       />
                     </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="patientEmail">Email Address *</Label>
-                    <Input
-                      id="patientEmail"
-                      name="patientEmail"
-                      type="email"
-                      value={formData.patientEmail}
-                      onChange={handleChange}
-                      required
-                      className="mt-1 bg-background"
-                    />
+                    <div>
+                      <Label htmlFor="patientEmail">Email Address *</Label>
+                      <Input
+                        id="patientEmail"
+                        name="patientEmail"
+                        type="email"
+                        value={formData.patientEmail}
+                        onChange={handleChange}
+                        required
+                        className="mt-1 bg-background"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -350,42 +389,89 @@ const NewPatients = () => {
                   </div>
                 </div>
 
-                {/* Medical Condition */}
+                {/* Medical Conditions */}
                 <div className="space-y-4">
                   <h3 className="font-heading font-semibold text-lg text-foreground border-b border-border pb-2">
-                    Medical Condition
+                    Medical Conditions (select all that apply)
                   </h3>
-                  <div>
-                    <Label>Medical Conditions (Select all that apply)</Label>
-                    <Popover open={medicalConditionsOpen} onOpenChange={setMedicalConditionsOpen}>
-                      <PopoverTrigger asChild>
-                        <button
-                          type="button"
-                          className={cn(
-                            "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-                            "mt-1"
-                          )}
-                        >
-                          <span className="text-muted-foreground">
-                            {formData.selectedConditions.length > 0
-                              ? `${formData.selectedConditions.length} condition(s) selected`
-                              : "Search and select conditions..."}
-                          </span>
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full min-w-[300px] p-0" align="start">
-                        <Command>
-                          <CommandInput placeholder="Search conditions..." />
-                          <CommandList className="max-h-60">
-                            <CommandEmpty>No condition found.</CommandEmpty>
-                            {medicalConditionCategories.map((cat) => (
-                              <CommandGroup key={cat.category} heading={cat.category}>
-                                {cat.conditions.map((condition) => (
+                  
+                  {/* Desktop: Checkbox Grid */}
+                  {!isMobile && (
+                    <div className="space-y-6">
+                      {/* None option at top */}
+                      <div className="flex items-center space-x-2 pb-4 border-b border-border">
+                        <Checkbox
+                          id="none-condition"
+                          checked={formData.selectedConditions.includes("None / No Medical Conditions")}
+                          onCheckedChange={() => toggleCondition("None / No Medical Conditions")}
+                        />
+                        <label htmlFor="none-condition" className="text-sm font-medium text-foreground cursor-pointer">
+                          None / No Medical Conditions
+                        </label>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                        {medicalConditionCategories.map((cat) => (
+                          <div key={cat.category} className="space-y-3">
+                            {cat.conditions.map((condition) => (
+                              <div key={condition} className="flex items-start space-x-2">
+                                <Checkbox
+                                  id={condition}
+                                  checked={formData.selectedConditions.includes(condition)}
+                                  onCheckedChange={() => toggleCondition(condition)}
+                                  disabled={formData.selectedConditions.includes("None / No Medical Conditions")}
+                                  className="mt-0.5"
+                                />
+                                <label 
+                                  htmlFor={condition} 
+                                  className={cn(
+                                    "text-sm text-muted-foreground cursor-pointer leading-tight",
+                                    formData.selectedConditions.includes("None / No Medical Conditions") && "opacity-50"
+                                  )}
+                                >
+                                  {condition}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Mobile: Dropdown Multi-select */}
+                  {isMobile && (
+                    <div>
+                      <Label>Select Medical Conditions</Label>
+                      <Popover open={medicalConditionsOpen} onOpenChange={setMedicalConditionsOpen}>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className={cn(
+                              "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                              "mt-1"
+                            )}
+                          >
+                            <span className="text-muted-foreground">
+                              {formData.selectedConditions.length > 0
+                                ? `${formData.selectedConditions.length} condition(s) selected`
+                                : "Tap to select conditions..."}
+                            </span>
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full min-w-[300px] p-0" align="start">
+                          <Command>
+                            <CommandInput placeholder="Search conditions..." />
+                            <CommandList className="max-h-60">
+                              <CommandEmpty>No condition found.</CommandEmpty>
+                              <CommandGroup>
+                                {allConditions.map((condition) => (
                                   <CommandItem
                                     key={condition}
                                     value={condition}
                                     onSelect={() => toggleCondition(condition)}
+                                    className={condition === "None / No Medical Conditions" ? "font-semibold border-b border-border" : ""}
                                   >
                                     <Check
                                       className={cn(
@@ -399,25 +485,26 @@ const NewPatients = () => {
                                   </CommandItem>
                                 ))}
                               </CommandGroup>
-                            ))}
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                    {formData.selectedConditions.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-3">
-                        {formData.selectedConditions.map((condition) => (
-                          <Badge key={condition} variant="secondary" className="flex items-center gap-1">
-                            {condition}
-                            <X
-                              className="h-3 w-3 cursor-pointer hover:text-primary"
-                              onClick={() => toggleCondition(condition)}
-                            />
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      {formData.selectedConditions.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {formData.selectedConditions.map((condition) => (
+                            <Badge key={condition} variant="secondary" className="flex items-center gap-1">
+                              {condition}
+                              <X
+                                className="h-3 w-3 cursor-pointer hover:text-primary"
+                                onClick={() => toggleCondition(condition)}
+                              />
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <div>
                     <Label htmlFor="otherConditions">Other (Please specify)</Label>
                     <Textarea

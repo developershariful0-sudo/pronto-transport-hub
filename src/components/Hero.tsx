@@ -18,10 +18,8 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container-max w-full px-4 md:px-8">
         <div className="max-w-2xl text-secondary-foreground animate-fade-in">
-          <h1 className="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-4">
-            <span className="block sm:inline">Reliable Medical</span>{" "}
-            <span className="block sm:inline">Transportation Services</span>{" "}
-            <span className="block sm:inline">in Houston</span>
+          <h1 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-4">
+            Medical Transportation Services in Houston
           </h1>
           <p className="text-base md:text-lg text-secondary-foreground/90 mb-6 leading-relaxed">
             Reliable non-emergency medical transportation for patients, families, and healthcare facilities throughout Houston and Harris County.

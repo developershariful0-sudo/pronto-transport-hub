@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { CheckCircle, Cross, Stethoscope, HeartPulse, Ambulance } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,8 +7,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { LucideIcon } from "lucide-react";
 
-const positions = [
+interface Position {
+  id: string;
+  title: string;
+  description: ReactNode;
+  icon: LucideIcon;
+}
+
+const positions: Position[] = [
   {
     id: "emtb",
     title: "EMT-B",
@@ -30,7 +38,19 @@ const positions = [
   {
     id: "driver",
     title: "Medical Transport Driver",
-    description: "EMR licensed driver",
+    description: (
+      <>
+        EMR Licensed Driver
+        <br />
+        / Wheelchair Driver
+      </>
+    ),
+    icon: Ambulance,
+  },
+  {
+    id: "wheelchair-driver",
+    title: "Wheelchair Driver",
+    description: "Wheelchair Transport Driver",
     icon: Ambulance,
   },
 ];
@@ -116,7 +136,7 @@ const Careers = () => {
             <h2 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-8 text-center">
               Open Positions
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-12">
               {positions.map((position) => (
                 <div
                   key={position.id}
@@ -146,12 +166,12 @@ const Careers = () => {
                   <div>
                     <Label htmlFor="position">Position *</Label>
                     <Select onValueChange={(value) => handleSelectChange("position", value)} required>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className="mt-1 bg-background text-foreground">
                         <SelectValue placeholder="Select a position" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-background">
                         {positions.map((pos) => (
-                          <SelectItem key={pos.id} value={pos.id}>
+                          <SelectItem key={pos.id} value={pos.id} className="text-foreground">
                             {pos.title}
                           </SelectItem>
                         ))}
